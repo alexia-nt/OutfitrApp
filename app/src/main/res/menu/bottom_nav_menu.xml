@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Tops"
+        android:icon="@drawable/shirt_outline"
+        android:id="@+id/tops"/>
+    <item android:title="Bottoms"
+        android:icon="@drawable/pants_outline"
+        android:id="@+id/bottoms"/>
+    <item android:title="Shoes"
+        android:icon="@drawable/shoe_outline"
+        android:id="@+id/shoes"/>
+    <item android:title="Create"
+        android:icon="@drawable/arrows"
+        android:id="@+id/create"/>
+    <item android:title="Account"
+        android:icon="@drawable/account_outline"
+        android:id="@+id/account"/>
+</menu>

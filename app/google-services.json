@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "537304691177",
+    "project_id": "outfitrapp-19729",
+    "storage_bucket": "outfitrapp-19729.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537304691177:android:37c16b0b6cc3cc91c5db78",
+        "android_client_info": {
+          "package_name": "com.example.outfitrapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537304691177-b2igcujnk2421e9s68ji8i6c98brne45.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.outfitrapp",
+            "certificate_hash": "4f42912b4184e395ed22e3c5270bbf7bae37c9b1"
+          }
+        },
+        {
+          "client_id": "537304691177-19dd7np60pr3jp694avtoebnj6dh84bh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR5ggOiol6P3rmSJu07lBwrtd3gLe4yUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537304691177-19dd7np60pr3jp694avtoebnj6dh84bh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
