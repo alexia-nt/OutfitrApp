@@ -2,11 +2,19 @@ package com.example.outfitrapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,5 +68,82 @@ public class CreateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //----------------------------------- carourel 1 -----------------------------------
+        ImageCarousel carousel1 = view.findViewById(R.id.carousel1);
+
+        // Register lifecycle. For activity this will be lifecycle/getLifecycle() and for fragments it will be viewLifecycleOwner/getViewLifecycleOwner().
+        carousel1.registerLifecycle(getLifecycle());
+
+        List<CarouselItem> list1 = new ArrayList<>();
+
+        // Image URL with caption
+        list1.add(
+                new CarouselItem(
+                        "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
+                )
+        );
+
+        // Just image URL
+        list1.add(
+                new CarouselItem(
+                        "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1080"
+                )
+        );
+
+        carousel1.setData(list1);
+
+        //----------------------------------- carourel 2 -----------------------------------
+        ImageCarousel carousel2 = view.findViewById(R.id.carousel2);
+
+        // Register lifecycle. For activity this will be lifecycle/getLifecycle() and for fragments it will be viewLifecycleOwner/getViewLifecycleOwner().
+        carousel2.registerLifecycle(getLifecycle());
+
+        List<CarouselItem> list2 = new ArrayList<>();
+
+        // Image URL with caption
+        list2.add(
+                new CarouselItem(
+                        "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
+                )
+        );
+
+        // Just image URL
+        list2.add(
+                new CarouselItem(
+                        "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1080"
+                )
+        );
+
+        carousel2.setData(list2);
+
+        //----------------------------------- carourel 3 -----------------------------------
+        ImageCarousel carousel3 = view.findViewById(R.id.carousel3);
+
+        // Register lifecycle. For activity this will be lifecycle/getLifecycle() and for fragments it will be viewLifecycleOwner/getViewLifecycleOwner().
+        carousel3.registerLifecycle(getLifecycle());
+
+        List<CarouselItem> list3 = new ArrayList<>();
+
+        // Image URL with caption
+        list3.add(
+                new CarouselItem(
+                        "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
+                )
+        );
+
+        // Just image URL
+        list3.add(
+                new CarouselItem(
+                        "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1080"
+                )
+        );
+
+        carousel3.setData(list3);
     }
 }
