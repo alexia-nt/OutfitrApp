@@ -9,6 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
@@ -74,7 +80,8 @@ public class CreateFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //----------------------------------- carourel 1 -----------------------------------
+        // ------------------------- firebase why not image carousel Tops -------------------------
+
         ImageCarousel carousel1 = view.findViewById(R.id.carousel1);
 
         // Register lifecycle. For activity this will be lifecycle/getLifecycle() and for fragments it will be viewLifecycleOwner/getViewLifecycleOwner().
@@ -82,23 +89,25 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list1 = new ArrayList<>();
 
-        // Image URL with caption
-        list1.add(
-                new CarouselItem(
-                        "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
-                )
-        );
+        FirebaseDatabase.getInstance().getReference().child("TopsSlider")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot data:dataSnapshot.getChildren()) {
+                            list1.add(new CarouselItem(data.child("url").getValue().toString()));
+                        }
+                        carousel1.setData(list1);
+                    }
 
-        // Just image URL
-        list1.add(
-                new CarouselItem(
-                        "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1080"
-                )
-        );
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(getActivity(), "Failure",Toast.LENGTH_LONG).show();
+                    }
+                });
 
-        carousel1.setData(list1);
 
-        //----------------------------------- carourel 2 -----------------------------------
+        // ------------------------ firebase why not image carousel Bottoms ------------------------
+
         ImageCarousel carousel2 = view.findViewById(R.id.carousel2);
 
         // Register lifecycle. For activity this will be lifecycle/getLifecycle() and for fragments it will be viewLifecycleOwner/getViewLifecycleOwner().
@@ -106,23 +115,24 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list2 = new ArrayList<>();
 
-        // Image URL with caption
-        list2.add(
-                new CarouselItem(
-                        "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
-                )
-        );
+        FirebaseDatabase.getInstance().getReference().child("BottomsSlider")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot data:dataSnapshot.getChildren()) {
+                            list2.add(new CarouselItem(data.child("url").getValue().toString()));
+                        }
+                        carousel2.setData(list2);
+                    }
 
-        // Just image URL
-        list2.add(
-                new CarouselItem(
-                        "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1080"
-                )
-        );
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(getActivity(), "Failure",Toast.LENGTH_LONG).show();
+                    }
+                });
 
-        carousel2.setData(list2);
+        // ------------------------ firebase why not image carousel Shoes ------------------------
 
-        //----------------------------------- carourel 3 -----------------------------------
         ImageCarousel carousel3 = view.findViewById(R.id.carousel3);
 
         // Register lifecycle. For activity this will be lifecycle/getLifecycle() and for fragments it will be viewLifecycleOwner/getViewLifecycleOwner().
@@ -130,20 +140,20 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list3 = new ArrayList<>();
 
-        // Image URL with caption
-        list3.add(
-                new CarouselItem(
-                        "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
-                )
-        );
+        FirebaseDatabase.getInstance().getReference().child("ShoesSlider")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot data:dataSnapshot.getChildren()) {
+                            list3.add(new CarouselItem(data.child("url").getValue().toString()));
+                        }
+                        carousel3.setData(list3);
+                    }
 
-        // Just image URL
-        list3.add(
-                new CarouselItem(
-                        "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1080"
-                )
-        );
-
-        carousel3.setData(list3);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(getActivity(), "Failure",Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }
