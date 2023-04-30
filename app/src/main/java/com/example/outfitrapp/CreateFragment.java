@@ -94,7 +94,7 @@ public class CreateFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot data:dataSnapshot.getChildren()) {
-                            list1.add(new CarouselItem(data.child("url").getValue().toString()));
+                            list1.add(new CarouselItem(data.child("imageURL").getValue().toString()));
                         }
                         carousel1.setData(list1);
                     }
@@ -120,7 +120,7 @@ public class CreateFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot data:dataSnapshot.getChildren()) {
-                            list2.add(new CarouselItem(data.child("url").getValue().toString()));
+                            list2.add(new CarouselItem(data.child("imageURL").getValue().toString()));
                         }
                         carousel2.setData(list2);
                     }
@@ -145,7 +145,7 @@ public class CreateFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot data:dataSnapshot.getChildren()) {
-                            list3.add(new CarouselItem(data.child("url").getValue().toString()));
+                            list3.add(new CarouselItem(data.child("imageURL").getValue().toString()));
                         }
                         carousel3.setData(list3);
                     }
