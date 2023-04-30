@@ -97,7 +97,7 @@ public class TopsFragment extends Fragment {
             gridView=view.findViewById(R.id.gridView);
 
             dataList=new ArrayList<>();
-            adapter=new MyAdapter(dataList,getActivity().getApplicationContext());/*this*/
+            adapter=new MyAdapter(dataList,this.getActivity());
             gridView.setAdapter(adapter);
 
 

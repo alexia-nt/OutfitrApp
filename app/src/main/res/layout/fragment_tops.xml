@@ -16,7 +16,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="650dp"
-        android:layout_marginLeft="335dp"
+        android:layout_marginLeft="320dp"
         android:backgroundTint="@color/lavender"
         android:src="@drawable/baseline_add_circle_24"
         app:tint="@color/white" />

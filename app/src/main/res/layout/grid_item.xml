@@ -19,13 +19,7 @@
             android:layout_height="150dp"
             android:id="@+id/gridImage"
             android:scaleType="centerCrop"/>
-<!--
-        <ImageView
-            android:id="@+id/deleteView"
-            android:src="@drawable/baseline_delete_24"
-            android:layout_width="20dp"
-            android:layout_height="30dp">
-        </ImageView>-->
+
 
     </androidx.cardview.widget.CardView>
 
