@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UploadActivity">
+    <!-- android:background="@drawable/upload"
+     -->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/lavender_border"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="1dp"
+            android:gravity="center"
+            android:text="Upload your favourite clothes"
+            android:textColor="@color/lavender"
+            android:textSize="30dp" />
+
+        <ImageView
+            android:id="@+id/uploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="40dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/upload" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/lavender"
+            android:visibility="invisible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="150dp"
+            android:orientation="horizontal">
+
+            <!-- <AutoCompleteTextView
+                android:id="@+id/uploadCaption"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="0.6"
+                android:background="@drawable/lavender_border"
+                android:hint="Select a color"
+                android:padding="16dp"
+                 android:completionThreshold="1"
+                 android:completionHint="Select a color"/>-->
+
+            <EditText
+                android:id="@+id/uploadCaption"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="0.6"
+                android:background="@drawable/lavender_border"
+                android:hint="Add a caption"
+                android:padding="16dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/uploadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@color/lavender"
+                android:src="@drawable/baseline_send_24"
+                app:tint="@color/white"/>
+
+            <!--   <Button
+                   android:id="@+id/uploadButton"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentBottom="true"
+                   android:layout_centerHorizontal="true"
+                   android:layout_marginStart="100dp"
+                   android:layout_marginTop="100dp"
+                   android:layout_marginBottom="15dp"
+                   android:text="Upload"
+                    />
+
+               <TextView
+                   android:id="@+id/show_uploads"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignBaseline="@+id/uploadButton"
+                   android:layout_alignBottom="@+id/uploadButton"
+                   android:layout_marginStart="75dp"
+                   android:layout_marginTop="10dp"
+                   android:text="Uploads images"
+                   android:textSize="20sp" />
+   -->
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+

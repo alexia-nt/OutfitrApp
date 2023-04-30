@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,11 +8,40 @@
     tools:context=".TopsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="26dp"
-        android:text="tops fragment"
-        android:layout_gravity="center" />
+        android:layout_height="76dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="650dp"
+        android:layout_marginLeft="335dp"
+        android:backgroundTint="@color/lavender"
+        android:src="@drawable/baseline_add_circle_24"
+        app:tint="@color/white" />
+
+    <!-- <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_centerHorizontal="true"
+         android:id="@+id/uploadButton"
+         android:layout_marginStart="100dp"
+         android:layout_marginTop="100dp"
+         android:layout_marginBottom="15dp"
+         android:text="Upload"/>-->
+
+    <!-- <androidx.recyclerview.widget.RecyclerView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:id="@+id/recyclerView"/>-->
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2" />
+
 
 </FrameLayout>

@@ -1,5 +1,6 @@
 package com.example.outfitrapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,10 +10,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -75,9 +79,56 @@ public class TopsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tops, container, false);
     }
+    FloatingActionButton fab;
 
+    GridView gridView;
+    ArrayList<DataClass> dataList;
+    MyAdapter adapter;
+    final  private DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("TopsSlider");
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
+
+            fab=view.findViewById(R.id.fab);
+            gridView=view.findViewById(R.id.gridView);
+
+            dataList=new ArrayList<>();
+            adapter=new MyAdapter(dataList,getActivity().getApplicationContext());/*this*/
+            gridView.setAdapter(adapter);
+
+
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                        DataClass dataClass=dataSnapshot.getValue(DataClass.class);
+                        dataList.add(dataClass);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(getActivity(),UploadActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            });
+
+
 
         // write your code here
     }
