@@ -1,65 +1,44 @@
 package com.example.outfitrapp;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.bumptech.glide.Glide;
+import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-
-import java.util.ArrayList;
-
-
-public class MyAdapter extends BaseAdapter {
-
-    private ArrayList<DataClass> daraList;
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+    private ArrayList<DataClass> dataList;
     private Context context;
-    LayoutInflater layoutInflater;
-    public MyAdapter(ArrayList<DataClass> daraList, Context context) {
-        this.daraList = daraList;
+    public MyAdapter(Context context, ArrayList<DataClass> dataList) {
         this.context = context;
+        this.dataList = dataList;
     }
-
+    @NonNull
     @Override
-    public int getCount() {
-        return daraList.size();
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.grid_item, parent, false);
+        return new MyViewHolder(view);
     }
-
     @Override
-    public Object getItem(int position) {
-        return null;
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Glide.with(context).load(dataList.get(position).getImageURL()).into(holder.recyclerImage);
+        holder.recyclerCaption.setText(dataList.get(position).getCaption());
     }
-
     @Override
-    public long getItemId(int position) {
-        return 0;
+    public int getItemCount() {
+        return dataList.size();
     }
-
-    @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        if(layoutInflater==null){
-            layoutInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        ImageView recyclerImage;
+        TextView recyclerCaption;
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            recyclerImage = itemView.findViewById(R.id.recyclerImage);
+            recyclerCaption = itemView.findViewById(R.id.recyclerCaption);
         }
-        if(view==null){
-            view=layoutInflater.inflate(R.layout.grid_item,null);
-        }
-        /* ImageView gridDelete=view.findViewById(R.id.deleteView);*/
-        ImageView gridImage=view.findViewById(R.id.gridImage);
-        TextView gridCaption=view.findViewById(R.id.gridCaption);
-
-        Glide.with(context).load(daraList.get(position).getImageURL()).into(gridImage);
-        gridCaption.setText(daraList.get(position).getCaption());
-
-        return view;
     }
 }
-
-//this is a test

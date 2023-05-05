@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,57 +82,52 @@ public class TopsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tops, container, false);
     }
-    FloatingActionButton fab;
 
-    GridView gridView;
-    ArrayList<DataClass> dataList;
-    MyAdapter adapter;
-    final  private DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("TopsSlider");
+//    FloatingActionButton fab;
+//
+//    GridView gridView;
+//    ArrayList<DataClass> dataList;
+//    MyAdapter adapter;
+//    final  private DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("TopsSlider");
+
+    FloatingActionButton fab;
+    private RecyclerView recyclerView;
+    private ArrayList<DataClass> dataList;
+    private MyAdapter adapter;
+    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TopsSlider");
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
-
-            fab=view.findViewById(R.id.fab);
-            gridView=view.findViewById(R.id.gridView);
-
-            dataList=new ArrayList<>();
-            adapter=new MyAdapter(dataList,this.getActivity());
-            gridView.setAdapter(adapter);
-
-
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                        DataClass dataClass=dataSnapshot.getValue(DataClass.class);
-                        dataList.add(dataClass);
-                    }
-                    adapter.notifyDataSetChanged();
+        fab = view.findViewById(R.id.fab);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),2));
+        dataList = new ArrayList<>();
+        adapter = new MyAdapter(this.getActivity(), dataList);
+        recyclerView.setAdapter(adapter);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
+                    dataList.add(dataClass);
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-
-
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=new Intent(getActivity(),UploadActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-            });
-
-
-
-        // write your code here
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),UploadActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
     }
 }
