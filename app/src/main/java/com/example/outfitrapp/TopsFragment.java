@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +16,15 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
@@ -31,7 +37,7 @@ import java.util.List;
  * Use the {@link TopsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TopsFragment extends Fragment {
+public class TopsFragment extends Fragment implements MyAdapter.OnItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,57 +85,86 @@ public class TopsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tops, container, false);
     }
-    FloatingActionButton fab;
 
-    GridView gridView;
-    ArrayList<DataClass> dataList;
-    MyAdapter adapter;
-    final  private DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("TopsSlider");
+//    FloatingActionButton fab;
+//
+//    GridView gridView;
+//    ArrayList<DataClass> dataList;
+//    MyAdapter adapter;
+//    final  private DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("TopsSlider");
+
+    private FirebaseStorage mStorage;
+    private ValueEventListener valueEventListener;
+    FloatingActionButton fab;
+    private RecyclerView recyclerView;
+    private ArrayList<DataClass> dataList;
+    private MyAdapter adapter;
+    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TopsSlider");
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        fab = view.findViewById(R.id.fab);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),2));
+        dataList = new ArrayList<>();
+        adapter = new MyAdapter(this.getActivity(), dataList);
+        recyclerView.setAdapter(adapter);
 
 
+        adapter.setOnItemClickListener(TopsFragment.this);
 
-            fab=view.findViewById(R.id.fab);
-            gridView=view.findViewById(R.id.gridView);
-
-            dataList=new ArrayList<>();
-            adapter=new MyAdapter(dataList,this.getActivity());
-            gridView.setAdapter(adapter);
-
-
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                        DataClass dataClass=dataSnapshot.getValue(DataClass.class);
-                        dataList.add(dataClass);
-                    }
-                    adapter.notifyDataSetChanged();
+        mStorage=FirebaseStorage.getInstance();
+       valueEventListener= databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
+                    dataClass.setKey(dataSnapshot.getKey());
+                    dataList.add(dataClass);
                 }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),UploadActivity.class);
+                startActivity(intent);
+               /* getActivity().finish();*/
+            }
+        });
+    }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+    @Override
+    public void onDeleteClick(int position) {
+        DataClass selected=dataList.get(position);
+        String selectedKey=selected.getKey();
+        StorageReference img=mStorage.getReferenceFromUrl(selected.getImageURL());
+        img.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                databaseReference.child(selectedKey).removeValue();
+                Toast.makeText(getActivity(),"Image deleted",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-                }
-            });
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        databaseReference.removeEventListener(valueEventListener);
+    }
 
+    @Override
+    public void onItemClick(int position) {
 
-
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=new Intent(getActivity(),UploadActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-            });
-
-
-
-        // write your code here
     }
 }
