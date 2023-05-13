@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,8 +23,21 @@ public class SignupActivity extends AppCompatActivity {
     private Button signupButton;
     private TextView loginRedirectText;
     private FirebaseDatabase database;
-    private DatabaseReference usersRef;
+    public DatabaseReference usersRef;
     private String userId ;
+    FirebaseUser currentUser;
+    private DatabaseReference sDatabaseRef;
+
+    public DatabaseReference getDatabaseRef() {
+        if (sDatabaseRef == null) {
+            sDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        }
+        return sDatabaseRef;
+    }
+
+    public DatabaseReference getUserRef(String userIdentity) {
+        return getDatabaseRef().child("Users").child(userId).child(userIdentity);
+    }
 
 
     @Override
@@ -33,9 +47,12 @@ public class SignupActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         database = FirebaseDatabase.getInstance();
-        usersRef = database.getReference("users");
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        usersRef = database.getReference("Users");
 
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            userId = currentUser.getUid();}
 
         signupEmail = findViewById(R.id.signup_email);
         signupPassword = findViewById(R.id.signup_password);
@@ -55,7 +72,6 @@ public class SignupActivity extends AppCompatActivity {
 
                     User user1 = new User();
                     user1.setEmail(user);
-                    user1.setPassword(pass);
                     usersRef.child(userId).setValue(user1);
 
                     auth.createUserWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -64,6 +80,7 @@ public class SignupActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toast.makeText(SignupActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                                finish();
                             } else {
                                 Toast.makeText(SignupActivity.this, "Invalid Registration", Toast.LENGTH_SHORT).show();
                             }
@@ -76,6 +93,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                finish();
             }
         });
     }

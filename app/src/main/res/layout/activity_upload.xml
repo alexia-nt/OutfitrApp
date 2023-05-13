@@ -26,7 +26,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="1dp"
             android:gravity="center"
-            android:text="Upload your favourite clothes"
+            android:text="Upload your favoutite cloth"
             android:textColor="@color/lavender"
             android:textSize="30dp" />
 
@@ -36,7 +36,7 @@
             android:layout_height="300dp"
             android:layout_marginTop="40dp"
             android:scaleType="fitXY"
-            android:src="@drawable/upload" />
+            android:src="@drawable/fit" />
 
         <ProgressBar
             android:id="@+id/progressBar"

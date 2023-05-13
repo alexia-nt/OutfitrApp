@@ -1,5 +1,8 @@
 package com.example.outfitrapp;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class User {
     String userID,email,password;
 

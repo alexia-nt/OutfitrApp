@@ -1,6 +1,7 @@
 package com.example.outfitrapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -80,9 +81,12 @@ public class AccountFragment extends Fragment {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("remember","false");
                 editor.apply();
-
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 getActivity().finish();
-            }
+
+                }
         });
 
     }
