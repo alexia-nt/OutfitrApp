@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText loginEmail, loginPassword;
     private TextView signupRedirectText;
     private Button loginButton;
-    private FirebaseAuth auth;
+    public FirebaseAuth auth;
     private CheckBox remember;
 
     @Override
@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         remember = findViewById(R.id.remember_me);
         signupRedirectText = findViewById(R.id.signUpRedirectText);
         auth = FirebaseAuth.getInstance();
+
         SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
         String checkbox = preferences.getString("remember","");
         if(checkbox.equals("true")){
@@ -99,6 +100,10 @@ public class LoginActivity extends AppCompatActivity {
         signupRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember","false");
+                editor.apply();
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
                 finish();
             }

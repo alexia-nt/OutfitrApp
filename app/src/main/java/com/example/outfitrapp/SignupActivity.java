@@ -3,13 +3,16 @@ package com.example.outfitrapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,43 +20,21 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SignupActivity extends AppCompatActivity {
-    private FirebaseAuth auth;
+public class SignupActivity  extends AppCompatActivity  {
+
+
+    public FirebaseAuth auth;
     private EditText signupEmail, signupPassword;
     private Button signupButton;
     private TextView loginRedirectText;
-    private FirebaseDatabase database;
-    public DatabaseReference usersRef;
-    private String userId ;
-    FirebaseUser currentUser;
-    private DatabaseReference sDatabaseRef;
-
-    public DatabaseReference getDatabaseRef() {
-        if (sDatabaseRef == null) {
-            sDatabaseRef = FirebaseDatabase.getInstance().getReference();
-        }
-        return sDatabaseRef;
-    }
-
-    public DatabaseReference getUserRef(String userIdentity) {
-        return getDatabaseRef().child("Users").child(userId).child(userIdentity);
-    }
-
+    private DatabaseReference usersRef= FirebaseDatabase.getInstance().getReference("Users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
         auth = FirebaseAuth.getInstance();
-
-        database = FirebaseDatabase.getInstance();
-        usersRef = database.getReference("Users");
-
-
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            userId = currentUser.getUid();}
-
         signupEmail = findViewById(R.id.signup_email);
         signupPassword = findViewById(R.id.signup_password);
         signupButton = findViewById(R.id.signup_button);
@@ -63,29 +44,31 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String user = signupEmail.getText().toString().trim();
                 String pass = signupPassword.getText().toString().trim();
-                if (user.isEmpty()) {
+                if (user.isEmpty()){
                     signupEmail.setError("Email cannot be empty");
                 }
-                if (pass.isEmpty()) {
+                if (pass.isEmpty()){
                     signupPassword.setError("Password cannot be empty");
                 } else {
+                    auth.createUserWithEmailAndPassword(user, pass)
+                            .addOnSuccessListener(authResult -> {
+                                String userId = authResult.getUser().getUid();
+                                User newUser = new User(user);
+                                usersRef.child(userId).setValue(newUser);
+                                User.setUserId(userId);
 
-                    User user1 = new User();
-                    user1.setEmail(user);
-                    usersRef.child(userId).setValue(user1);
+                                //TopsFragment otherInstance = new TopsFragment(usersRef,user);
+                                //UploadActivity otherInstance2 = new UploadActivity(usersRef,user);
 
-                    auth.createUserWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
+
+                                // Handle successful user registration
                                 Toast.makeText(SignupActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                                finish();
-                            } else {
-                                Toast.makeText(SignupActivity.this, "Invalid Registration", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                            })
+                            .addOnFailureListener(e -> {
+                                // Handle user registration failure
+                                Toast.makeText(SignupActivity.this, "SignUp Failed", Toast.LENGTH_SHORT).show();
+                            });
                 }
             }
         });
@@ -93,7 +76,6 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                finish();
             }
         });
     }
