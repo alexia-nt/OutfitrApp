@@ -51,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
                     auth.createUserWithEmailAndPassword(user, pass)
                             .addOnSuccessListener(authResult -> {
                                 String userId = authResult.getUser().getUid();
-                                User newUser = new User(user, pass);
+                                User newUser = new User(user);
                                 usersRef.child(userId).setValue(newUser);
                                 // Handle successful user registration
                                 Toast.makeText(SignUpActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
