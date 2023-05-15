@@ -25,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -44,7 +46,15 @@ public class UploadActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
     private Uri imageUri;
-    final private DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("TopsSlider");
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    String userId = currentUser.getUid();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    // Get the reference to the current user's node
+    DatabaseReference userRef = database.getReference("Users").child(userId);
+
+    // Create a new node inside the current user's node
+    DatabaseReference databaseReference = userRef.child("TopsSlider");
+//    final private DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("TopsSlider");
     final private StorageReference storageReference= FirebaseStorage.getInstance().getReference();
 
 
