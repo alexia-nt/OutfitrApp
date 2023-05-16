@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UploadActivity">
+    tools:context=".UploadShoesActivity">
     <!-- android:background="@drawable/upload"
      -->
 
@@ -79,7 +79,8 @@
                 android:layout_marginStart="10dp"
                 android:background="@color/lavender"
                 android:src="@drawable/baseline_send_24"
-                app:tint="@color/white"/>
+                app:tint="@color/white"
+                android:contentDescription="TODO" />
 
             <!--   <Button
                    android:id="@+id/uploadButton"
@@ -108,3 +109,4 @@
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
+

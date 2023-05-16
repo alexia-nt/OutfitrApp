@@ -5,7 +5,6 @@ import com.google.firebase.database.Exclude;
 
 public class DataClass {
     private String key;
-
     private String imageURL;
     private String caption;
     public DataClass(){

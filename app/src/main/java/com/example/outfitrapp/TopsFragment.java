@@ -128,7 +128,7 @@ public class TopsFragment extends Fragment implements MyAdapter.OnItemClickListe
         adapter.setOnItemClickListener(TopsFragment.this);
 
         mStorage=FirebaseStorage.getInstance();
-       valueEventListener= databaseReference.addValueEventListener(new ValueEventListener() {
+        valueEventListener= databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataList.clear();
@@ -148,7 +148,7 @@ public class TopsFragment extends Fragment implements MyAdapter.OnItemClickListe
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),UploadActivity.class);
                 startActivity(intent);
-               /* getActivity().finish();*/
+                /* getActivity().finish();*/
             }
         });
     }

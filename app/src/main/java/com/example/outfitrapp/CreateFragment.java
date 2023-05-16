@@ -127,7 +127,9 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list2 = new ArrayList<>();
 
-        FirebaseDatabase.getInstance().getReference().child("BottomsSlider")
+        // Create a new node inside the current user's node
+        // DatabaseReference databaseReference = userRef.child("TopsSlider");
+        userRef.child("BottomsSlider")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -152,7 +154,7 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list3 = new ArrayList<>();
 
-        FirebaseDatabase.getInstance().getReference().child("ShoesSlider")
+        userRef.child("ShoesSlider")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
