@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -99,7 +101,15 @@ public class TopsFragment extends Fragment implements MyAdapter.OnItemClickListe
     private RecyclerView recyclerView;
     private ArrayList<DataClass> dataList;
     private MyAdapter adapter;
-    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TopsSlider");
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    String userId = currentUser.getUid();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    // Get the reference to the current user's node
+    DatabaseReference userRef = database.getReference("Users").child(userId);
+
+    // Create a new node inside the current user's node
+    DatabaseReference databaseReference = userRef.child("TopsSlider");
+    //final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TopsSlider");
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

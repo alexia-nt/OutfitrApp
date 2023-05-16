@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -89,7 +92,16 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list1 = new ArrayList<>();
 
-        FirebaseDatabase.getInstance().getReference().child("TopsSlider")
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = currentUser.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // Get the reference to the current user's node
+        DatabaseReference userRef = database.getReference("Users").child(userId);
+
+        // Create a new node inside the current user's node
+        // DatabaseReference databaseReference = userRef.child("TopsSlider");
+        userRef.child("TopsSlider")
+        //FirebaseDatabase.getInstance().getReference().child("TopsSlider")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
