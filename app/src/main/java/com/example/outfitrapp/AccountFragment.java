@@ -13,6 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,11 +72,26 @@ public class AccountFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_account, container, false);
     }
     Button logout;
+    TextView textView;
+    FirebaseUser user;
+    FirebaseAuth auth;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         logout = view.findViewById(R.id.logout);
+
+        auth = FirebaseAuth.getInstance();
+        textView = view.findViewById(R.id.user_details);
+        user = auth.getCurrentUser();
+        if(user==null){
+            Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+        else{
+            textView.setText(user.getEmail());
+        }
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
