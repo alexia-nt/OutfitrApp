@@ -2,10 +2,12 @@ package com.example.outfitrapp;
 
 public class User {
 
+    // Class with the authenticated users
     private String email;
     private static String userId;
 
-//    private String password;
+
+    //Getters and Setters
 
     public String getEmail() {
         return email;

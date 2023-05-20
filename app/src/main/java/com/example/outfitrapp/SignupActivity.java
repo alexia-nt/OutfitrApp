@@ -52,14 +52,11 @@ public class SignupActivity  extends AppCompatActivity  {
                 } else {
                     auth.createUserWithEmailAndPassword(user, pass)
                             .addOnSuccessListener(authResult -> {
+                                // Creates Users
                                 String userId = authResult.getUser().getUid();
                                 User newUser = new User(user);
                                 usersRef.child(userId).setValue(newUser);
                                 User.setUserId(userId);
-
-                                //TopsFragment otherInstance = new TopsFragment(usersRef,user);
-                                //UploadActivity otherInstance2 = new UploadActivity(usersRef,user);
-
 
                                 // Handle successful user registration
                                 Toast.makeText(SignupActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();

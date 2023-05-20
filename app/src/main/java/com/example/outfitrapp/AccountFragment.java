@@ -93,6 +93,7 @@ public class AccountFragment extends Fragment {
             textView.setText(user.getEmail());
         }
 
+        // Clears data from intent and unchecks the remember me button
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

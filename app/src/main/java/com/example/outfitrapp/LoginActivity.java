@@ -35,14 +35,13 @@ public class LoginActivity extends AppCompatActivity {
         signupRedirectText = findViewById(R.id.signUpRedirectText);
         auth = FirebaseAuth.getInstance();
 
+        // Checks if the user wanted to be Logged in
         SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
         String checkbox = preferences.getString("remember","");
         if(checkbox.equals("true")){
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(intent);
 
-        }else if(checkbox.equals("false")){
-            Toast.makeText(this,"Please Sign in",Toast.LENGTH_SHORT).show();
         }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = loginEmail.getText().toString();
                 String pass = loginPassword.getText().toString();
                 if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    if (!pass.isEmpty()) {
+                    if (!pass.isEmpty() ) {
                         auth.signInWithEmailAndPassword(email, pass)
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
@@ -77,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Checks if checkboxes are clicked or not
         remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -97,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Sets the checkbox false if the user want to Sign Up
         signupRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
