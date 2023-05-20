@@ -120,7 +120,7 @@ public class UploadBottomsActivity extends AppCompatActivity{
                         databaseReference.child(key).setValue(dataClass);
                         progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(UploadBottomsActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
-                        Intent intent= new Intent(UploadBottomsActivity.this,BottomsFragment.class);
+                        Intent intent= new Intent(UploadBottomsActivity.this,MainActivity.class);
                         startActivity(intent);
                         finish();
                     }

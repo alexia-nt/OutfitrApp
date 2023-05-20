@@ -119,7 +119,7 @@ public class UploadShoesActivity extends AppCompatActivity{
                         databaseReference.child(key).setValue(dataClass);
                         progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(UploadShoesActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
-                        Intent intent= new Intent(UploadShoesActivity.this,ShoesFragment.class);
+                        Intent intent= new Intent(UploadShoesActivity.this,MainActivity.class);
                         startActivity(intent);
                         finish();
                     }
