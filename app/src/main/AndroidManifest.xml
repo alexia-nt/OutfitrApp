@@ -36,11 +36,13 @@
         <activity
             android:name=".UploadShoesActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.UploadShoesActivity"/>
         <activity
             android:name=".UploadBottomsActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.UploadBottomsActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="false"

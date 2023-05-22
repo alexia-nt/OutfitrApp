@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".UploadBottomsActivity">
     <!-- android:background="@drawable/upload"
      -->
@@ -49,7 +50,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="50dp"
             android:orientation="horizontal">
 
             <!-- <AutoCompleteTextView
@@ -77,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:backgroundTint="@color/lavender"
                 android:background="@color/lavender"
                 android:src="@drawable/baseline_send_24"
                 app:tint="@color/white"
