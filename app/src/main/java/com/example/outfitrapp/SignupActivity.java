@@ -42,6 +42,8 @@ public class SignupActivity  extends AppCompatActivity  {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@" + "[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$";
                 String user = signupEmail.getText().toString().trim();
                 String pass = signupPassword.getText().toString().trim();
                 if (user.isEmpty()){
@@ -64,11 +66,18 @@ public class SignupActivity  extends AppCompatActivity  {
                             })
                             .addOnFailureListener(e -> {
                                 // Handle user registration failure
-                                Toast.makeText(SignupActivity.this, "SignUp Failed", Toast.LENGTH_SHORT).show();
+                                if (!user.matches(regexPattern)){
+                                    Toast.makeText(SignupActivity.this, "Invalid email", Toast.LENGTH_SHORT).show();
+                                }else if(pass.length()<6)
+                                    Toast.makeText(SignupActivity.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+                                else{
+                                    Toast.makeText(SignupActivity.this, "SignUp failed", Toast.LENGTH_SHORT).show();}
                             });
                 }
             }
         });
+
+        //button to get user to Log in
         loginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
