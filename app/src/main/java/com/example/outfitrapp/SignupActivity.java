@@ -71,7 +71,7 @@ public class SignupActivity  extends AppCompatActivity  {
                                 }else if(pass.length()<6)
                                     Toast.makeText(SignupActivity.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
                                 else{
-                                    Toast.makeText(SignupActivity.this, "SignUp failed", Toast.LENGTH_SHORT).show();}
+                                    Toast.makeText(SignupActivity.this, "Signup failed - Try using a different email address", Toast.LENGTH_SHORT).show();}
                             });
                 }
             }
