@@ -22,10 +22,9 @@ public class User {
         return userId;
     }
 
-    public void setEmai(String imageURL) {
-        this.email = imageURL;
+    public void setEmail(String email) {
+        this.email = email;
     }
-
 
     public User(String email){
         this.email = email;
