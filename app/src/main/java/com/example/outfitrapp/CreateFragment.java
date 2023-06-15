@@ -98,14 +98,13 @@ public class CreateFragment extends Fragment {
         // Get the reference to the current user's node
         DatabaseReference userRef = database.getReference("Users").child(userId);
 
-        // Create a new node inside the current user's node
-        // DatabaseReference databaseReference = userRef.child("TopsSlider");
+        // Reference the node "TopSlider" inside the current user's node
         userRef.child("TopsSlider")
-        //FirebaseDatabase.getInstance().getReference().child("TopsSlider")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot data:dataSnapshot.getChildren()) {
+                            // add each image from the node "TopSlider" into the list
                             list1.add(new CarouselItem(data.child("imageURL").getValue().toString()));
                         }
                         carousel1.setData(list1);
@@ -127,13 +126,13 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list2 = new ArrayList<>();
 
-        // Create a new node inside the current user's node
-        // DatabaseReference databaseReference = userRef.child("TopsSlider");
+        // Reference the node "BottomsSlider" inside the current user's node
         userRef.child("BottomsSlider")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot data:dataSnapshot.getChildren()) {
+                            // add each image from the node "BottomsSlider" into the list
                             list2.add(new CarouselItem(data.child("imageURL").getValue().toString()));
                         }
                         carousel2.setData(list2);
@@ -154,11 +153,13 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list3 = new ArrayList<>();
 
+        // Reference the node "ShoesSlider" inside the current user's node
         userRef.child("ShoesSlider")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot data:dataSnapshot.getChildren()) {
+                            // add each image from the node "ShoesSlider" into the list
                             list3.add(new CarouselItem(data.child("imageURL").getValue().toString()));
                         }
                         carousel3.setData(list3);
