@@ -122,6 +122,11 @@ public class BottomsFragment extends Fragment implements MyAdapter.OnItemClickLi
 
         mStorage=FirebaseStorage.getInstance();
         valueEventListener= databaseReference.addValueEventListener(new ValueEventListener() {
+            /*
+             * Display of users' photos. Images are sorted using RecyclerView. It shows the bottoms
+             * that users have chosen to have in their wardrobe. The photos are displayed in the
+             * order selected by the user and with the description.
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataList.clear();
@@ -136,6 +141,10 @@ public class BottomsFragment extends Fragment implements MyAdapter.OnItemClickLi
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+        /*
+         * Enables by pressing the “+” button located at the bottom right to
+         * be transferred to the Upload Bottoms Activity to insert a new image.
+         */
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,6 +155,11 @@ public class BottomsFragment extends Fragment implements MyAdapter.OnItemClickLi
         });
     }
 
+    /*
+     * Can delete a photo by long pressing on it, so we get the position
+     * and key of the corresponding image and remove it from firebase. If
+     * the deletion is successful, it displays the message “Image deleted”.
+     */
     @Override
     public void onDeleteClick(int position) {
         DataClass selected=dataList.get(position);
