@@ -67,6 +67,11 @@ public class UploadShoesActivity extends AppCompatActivity{
 
         ActivityResultLauncher<Intent> activityResultLauncher=registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    /*
+                     * First checks if any image is selected from the gallery. Else if the user goes
+                     * in the gallery but return to the main app without selecting an image or without changing
+                     * the already existing image, the message “No image” is displayed.
+                     */
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if(result.getResultCode()== Activity.RESULT_OK){
@@ -81,6 +86,12 @@ public class UploadShoesActivity extends AppCompatActivity{
                 }
         );
 
+        /*
+         * We check if any image has been selected by the user. In case when the user has
+         * selected a photo, the upload process continues normally. However if he tries to
+         * upload without having selected a photo for the corresponding activity then the
+         * message "select image" is displayed without being executed some upload.
+         */
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +122,13 @@ public class UploadShoesActivity extends AppCompatActivity{
         imgref.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                /*
+                 * The upload can be done whether we have a description of the garment
+                 * or not, by pressing the arrow on the bottom right and if you upload it
+                 * done successfully then the message “Uploaded” will appear and it will
+                 * all relevant data is stored, such as description, and then we will be
+                 * transferred to MainActivity.
+                 */
                 imgref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -131,6 +149,7 @@ public class UploadShoesActivity extends AppCompatActivity{
                 progressBar.setVisibility(View.VISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
+            // if there is an error in the process, the message “failed” will be displayed
             @Override
             public void onFailure(@NonNull Exception e) {
                 progressBar.setVisibility(View.VISIBLE);
