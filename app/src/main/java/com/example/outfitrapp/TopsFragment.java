@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -99,7 +101,15 @@ public class TopsFragment extends Fragment implements MyAdapter.OnItemClickListe
     private RecyclerView recyclerView;
     private ArrayList<DataClass> dataList;
     private MyAdapter adapter;
-    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TopsSlider");
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    String userId = currentUser.getUid();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    // Get the reference to the current user's node
+    DatabaseReference userRef = database.getReference("Users").child(userId);
+
+    // Create a new node inside the current user's node
+    DatabaseReference databaseReference = userRef.child("TopsSlider");
+    //final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TopsSlider");
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -118,7 +128,12 @@ public class TopsFragment extends Fragment implements MyAdapter.OnItemClickListe
         adapter.setOnItemClickListener(TopsFragment.this);
 
         mStorage=FirebaseStorage.getInstance();
-       valueEventListener= databaseReference.addValueEventListener(new ValueEventListener() {
+        valueEventListener= databaseReference.addValueEventListener(new ValueEventListener() {
+            /*
+             * Display of users' photos. Images are sorted using RecyclerView. It shows the tops
+             * that users have chosen to have in their wardrobe. The photos are displayed in the
+             * order selected by the user and with the description.
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataList.clear();
@@ -133,16 +148,25 @@ public class TopsFragment extends Fragment implements MyAdapter.OnItemClickListe
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+        /*
+         * Enables by pressing the “+” button located at the bottom right to
+         * be transferred to the Upload Tops Activity to insert a new image.
+         */
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),UploadActivity.class);
                 startActivity(intent);
-               /* getActivity().finish();*/
+                /* getActivity().finish();*/
             }
         });
     }
 
+    /*
+     * Can delete a photo by long pressing on it, so we get the position
+     * and key of the corresponding image and remove it from firebase. If
+     * the deletion is successful, it displays the message “Image deleted”.
+     */
     @Override
     public void onDeleteClick(int position) {
         DataClass selected=dataList.get(position);

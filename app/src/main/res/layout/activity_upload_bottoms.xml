@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UploadActivity">
+    tools:context=".UploadBottomsActivity">
     <!-- android:background="@drawable/upload"
      -->
 
@@ -26,17 +26,17 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="1dp"
             android:gravity="center"
-            android:text="Tap to upload your favourite tops"
+            android:text="Tap to upload your favourite bottoms"
             android:textColor="@color/lavender"
             android:textSize="30dp" />
 
         <ImageView
             android:id="@+id/uploadImage"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="380dp"
             android:layout_marginTop="40dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/shirt_outline" />
+            android:src="@drawable/pants_outline" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -49,7 +49,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="50dp"
             android:orientation="horizontal">
 
             <!-- <AutoCompleteTextView
@@ -80,7 +80,8 @@
                 android:backgroundTint="@color/lavender"
                 android:background="@color/lavender"
                 android:src="@drawable/baseline_send_24"
-                app:tint="@color/white"/>
+                app:tint="@color/white"
+                android:contentDescription="TODO" />
 
             <!--   <Button
                    android:id="@+id/uploadButton"
@@ -109,3 +110,4 @@
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
+

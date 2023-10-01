@@ -21,12 +21,14 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // the main activity starts with the tops fragment
         replaceFragment(new TopsFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             int id = item.getItemId();
 
+            // replace fragment depending on which item menu the user clicks on
             if (id == R.id.tops)
                 replaceFragment(new TopsFragment());
             else if (id == R.id.bottoms)
@@ -43,10 +45,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // function that handles the replacement of the fragments
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout,fragment);
         fragmentTransaction.commit();
+    }
+
+    public void onBackPressed() {
+        finish();
     }
 }

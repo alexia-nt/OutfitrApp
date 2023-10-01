@@ -8,8 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -34,8 +32,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class UploadActivity extends AppCompatActivity {
-
+public class UploadBottomsActivity extends AppCompatActivity{
     private FloatingActionButton uploadButton;
     EditText uploadCaption;
 
@@ -53,7 +50,7 @@ public class UploadActivity extends AppCompatActivity {
     DatabaseReference userRef = database.getReference("Users").child(userId);
 
     // Create a new node inside the current user's node
-    DatabaseReference databaseReference = userRef.child("TopsSlider");
+    DatabaseReference databaseReference = userRef.child("BottomsSlider");
     //final private DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("TopsSlider");
     final private StorageReference storageReference= FirebaseStorage.getInstance().getReference();
 
@@ -61,7 +58,7 @@ public class UploadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload);
+        setContentView(R.layout.activity_upload_bottoms);
 
         uploadButton=findViewById(R.id.uploadButton);
         uploadCaption=findViewById(R.id.uploadCaption);
@@ -84,7 +81,7 @@ public class UploadActivity extends AppCompatActivity {
                             uploadImage.setImageURI(imageUri);
 
                         }else {
-                            Toast.makeText(UploadActivity.this,"No Image",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UploadBottomsActivity.this,"No Image",Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -112,7 +109,7 @@ public class UploadActivity extends AppCompatActivity {
                 if(imageUri !=null){
                     uploadToFirebase(imageUri);
                 }else{
-                    Toast.makeText(UploadActivity.this,"Select image",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadBottomsActivity.this,"Select image",Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -140,8 +137,8 @@ public class UploadActivity extends AppCompatActivity {
                         String key=databaseReference.push().getKey();
                         databaseReference.child(key).setValue(dataClass);
                         progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(UploadActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
-                        Intent intent= new Intent(UploadActivity.this,MainActivity.class);
+                        Toast.makeText(UploadBottomsActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                        Intent intent= new Intent(UploadBottomsActivity.this,MainActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -157,7 +154,7 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 progressBar.setVisibility(View.VISIBLE);
-                Toast.makeText(UploadActivity.this,"failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadBottomsActivity.this,"failed",Toast.LENGTH_SHORT).show();
             }
         });
 

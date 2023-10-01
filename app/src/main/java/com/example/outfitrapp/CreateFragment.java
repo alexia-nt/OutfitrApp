@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -89,11 +92,19 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list1 = new ArrayList<>();
 
-        FirebaseDatabase.getInstance().getReference().child("TopsSlider")
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = currentUser.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // Get the reference to the current user's node
+        DatabaseReference userRef = database.getReference("Users").child(userId);
+
+        // Reference the node "TopSlider" inside the current user's node
+        userRef.child("TopsSlider")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot data:dataSnapshot.getChildren()) {
+                            // add each image from the node "TopSlider" into the list
                             list1.add(new CarouselItem(data.child("imageURL").getValue().toString()));
                         }
                         carousel1.setData(list1);
@@ -115,11 +126,13 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list2 = new ArrayList<>();
 
-        FirebaseDatabase.getInstance().getReference().child("BottomsSlider")
+        // Reference the node "BottomsSlider" inside the current user's node
+        userRef.child("BottomsSlider")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot data:dataSnapshot.getChildren()) {
+                            // add each image from the node "BottomsSlider" into the list
                             list2.add(new CarouselItem(data.child("imageURL").getValue().toString()));
                         }
                         carousel2.setData(list2);
@@ -140,11 +153,13 @@ public class CreateFragment extends Fragment {
 
         List<CarouselItem> list3 = new ArrayList<>();
 
-        FirebaseDatabase.getInstance().getReference().child("ShoesSlider")
+        // Reference the node "ShoesSlider" inside the current user's node
+        userRef.child("ShoesSlider")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot data:dataSnapshot.getChildren()) {
+                            // add each image from the node "ShoesSlider" into the list
                             list3.add(new CarouselItem(data.child("imageURL").getValue().toString()));
                         }
                         carousel3.setData(list3);
